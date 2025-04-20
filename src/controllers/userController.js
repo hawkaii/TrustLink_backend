@@ -8,9 +8,11 @@ const userController = {
   // Get all users
   getUsers: async (req, res) => {
     try {
+      // Fetch all users from the database
       const users = await userServices.getAllUsers();
       res.status(200).json(users);
     } catch (error) {
+      // Handle errors and send a 500 response
       res.status(500).json({ message: error.message });
     }
   },
@@ -18,18 +20,21 @@ const userController = {
   // Get a user by their ID
   getUserById: async (req, res) => {
     try {
+      // Fetch a user using their ID from the authenticated request
       const user = await userServices.getUserById(req.user.id);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
       res.status(200).json(user);
     } catch (error) {
+      // Handle errors and send a 500 response
       res.status(500).json({ message: error.message });
     }
   },
 
   // Create a new user
   createUser: [
+    // Validate and sanitize input fields
     body("fullName", "Full name must be at least 2 characters")
       .trim()
       .isLength({ min: 2 })
@@ -40,6 +45,7 @@ const userController = {
       .isLength({ min: 10 })
       .escape()
       .custom(async (value) => {
+        // Check if the mobile number already exists
         if (value) {
           const user = await userServices.getUserByMobileNumber(value);
           if (user) {
@@ -54,6 +60,7 @@ const userController = {
       .isEmail()
       .escape()
       .custom(async (value) => {
+        // Check if the email already exists
         if (value) {
           const user = await userServices.getUserByEmail(value);
           if (user) {
@@ -74,7 +81,9 @@ const userController = {
           .json({ message: "Either mobile number or email is required" });
       }
       try {
+        // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 10);
+        // Create a new user
         const userData = await userServices.createUser({
           fullName,
           mobileNumber,
@@ -84,6 +93,7 @@ const userController = {
         });
         res.status(201).json(userData);
       } catch (error) {
+        // Handle errors and send a 500 response
         res.status(500).json({ message: error.message });
       }
     },
@@ -91,12 +101,14 @@ const userController = {
 
   // Authenticate user for signin
   authenticateUser: [
+    // Validate and sanitize input fields
     body("identifier", "Mobile number or email is required")
       .trim()
       .notEmpty()
       .escape()
       .custom(async (value, { req }) => {
         let user;
+        // Check if the identifier is an email or mobile number
         if (value.includes("@")) {
           user = await userServices.getUserByEmail(value);
         } else {
@@ -105,7 +117,7 @@ const userController = {
         if (!user) {
           throw new Error("Invalid credentials");
         }
-        req.user = user;
+        req.user = user; // Attach the user to the request object
         return true;
       }),
     body("password", "Password is required")
@@ -113,6 +125,7 @@ const userController = {
       .notEmpty()
       .escape()
       .custom(async (value, { req }) => {
+        // Compare the provided password with the stored hashed password
         const match = await bcrypt.compare(value, req.user.password);
         if (!match) {
           throw new Error("Password Incorrect");
@@ -120,21 +133,24 @@ const userController = {
         return true;
       }),
     (req, res, next) => {
+      // Check for validation errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      next();
+      next(); // Proceed to the next middleware or route handler
     },
   ],
 
   // Delete a user
   deleteUser: async (req, res) => {
     try {
+      // Delete the user by their ID
       const user = await userServices.deleteUser(req.user.id);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
+      // Also delete the associated profile
       await profileServices.deleteProfile(req.user.id);
       return res
         .status(200)
@@ -148,6 +164,7 @@ const userController = {
 
   // Edit user details
   editUser: [
+    // Validate and sanitize input fields
     body("fullName", "Full name must be at least 2 characters")
       .optional()
       .trim()
@@ -159,6 +176,7 @@ const userController = {
       .isLength({ min: 10 })
       .escape()
       .custom(async (value, { req }) => {
+        // Check if the mobile number already exists for another user
         const user = await userServices.getUserByMobileNumber(value);
         if (user && user.id !== req.user.id) {
           throw new Error("Mobile number already exists");
@@ -171,6 +189,7 @@ const userController = {
       .isEmail()
       .escape()
       .custom(async (value, { req }) => {
+        // Check if the email already exists for another user
         const user = await userServices.getUserByEmail(value);
         if (user && user.id !== req.user.id) {
           throw new Error("Email already exists");
@@ -186,6 +205,7 @@ const userController = {
       const formData = {};
       const { fullName, mobileNumber, email, password, birthday } = req.body;
 
+      // Update only the provided fields
       if (fullName) formData.fullName = fullName;
       if (mobileNumber) formData.mobileNumber = mobileNumber;
       if (email) formData.email = email;
@@ -193,11 +213,13 @@ const userController = {
       if (birthday) formData.birthday = birthday;
 
       try {
+        // Update the user details
         const updatedUser = await userServices.editUser(formData, req.user);
         res
           .status(200)
           .json({ updatedUser, message: "User updated successfully" });
       } catch (error) {
+        // Handle errors and send a 500 response
         res.status(500).json({ message: error.message });
       }
     },
