@@ -240,3 +240,30 @@
 ## 5. Messages
 
 (No endpoints defined for this category in the provided JSON.)
+
+## 6. StarkNet
+
+### a. Initiate Transaction
+
+- **Method:** POST
+- **Endpoint:** `/starknet/transaction`
+- **Payload:**
+  ```json
+  {
+    "privateKey": "<your_private_key>",
+    "contractAddress": "<contract_address>",
+    "functionName": "<function_name>",
+    "calldata": ["<calldata_array>"]
+  }
+  ```
+- **Description:** Initiates a transaction on StarkNet.
+
+### b. Query Transaction Status
+
+- **Method:** GET
+- **Endpoint:** `/starknet/transaction/:hash`
+- **Description:** Queries the status of a transaction using its hash.
+
+---
+
+**Note:** Switch to the `development` branch to test StarkNet-related features.

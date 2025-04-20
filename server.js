@@ -15,6 +15,7 @@ import userRouter from "./src/routes/userRoutes.js";
 import profileRouter from "./src/routes/profileRoutes.js";
 import postRouter from "./src/routes/postRoutes.js";
 import messageRouter from "./src/routes/messageRoute.js";
+import starknetRouter from "./src/routes/starknetRoutes.js";
 
 // Import database connection
 import { connectToDatabase } from "./src/config/mongooseConnect.js";
@@ -69,6 +70,7 @@ app.use("/v1/", userRouter);
 app.use("/v1/", profileRouter);
 app.use("/v1/", postRouter);
 app.use("/v1/", messageRouter);
+app.use("/v1/", starknetRouter);
 
 // Create HTTP server
 const server = http.createServer(app);
