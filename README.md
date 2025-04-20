@@ -17,7 +17,6 @@ This project consists of two main components:
 
 - **Backend Hosting**: The backend server is hosted on [DigitalOcean](https://www.digitalocean.com).
 - **Frontend Repository**: [TrustLink](https://github.com/hawkaii/TrustLink)
-- **Base URL**: The base URL for API requests is `https://tienext.inceptionsoftech.com/v1`.
 
 ---
 
