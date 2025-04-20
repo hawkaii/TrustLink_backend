@@ -28,7 +28,22 @@ The detailed API endpoints are documented in the [endpoints.md](./endpoints.md) 
 
 ## Variables
 
-- `baseURL`: Base URL for the API requests. Default: `https://tienext.inceptionsoftech.com/v1`
+To configure the application, create a `.env` file in the root directory of the backend project and define the following variables:
+
+```
+DATABASE_URL="mysql://<username>:<password>@<host>:<port>/<database>"
+MONGODB_URI="mongodb://<host>:<port>/<database>"
+PRIVATE_KEY="<your_private_key>"
+```
+
+Replace `<username>`, `<password>`, `<host>`, `<port>`, `<database>`, and `<your_private_key>` with your actual values.
+
+Example:
+```
+DATABASE_URL="mysql://root:hawkaii@2020@localhost:3306/mysocial"
+MONGODB_URI="mongodb://localhost:27017/trustlink"
+PRIVATE_KEY="0x03ecab483b86fd9f987699597d160411cec937039b089e2db1f8abcd58679a1e"
+```
 
 ---
 
