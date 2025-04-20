@@ -17,7 +17,7 @@ This project consists of two main components:
 
 - **Backend Hosting**: The backend server is hosted on [DigitalOcean](https://www.digitalocean.com).
 - **Frontend Repository**: [TrustLink](https://github.com/hawkaii/TrustLink)
-- **StarkNet**: ![StarkNet Logo](https://starkware.co/wp-content/uploads/2021/05/cropped-StarkNet.png) StarkNet is used for handling blockchain transactions efficiently.
+- **StarkNet**: StarkNet is used for handling blockchain transactions efficiently.
 
 ---
 
