@@ -2,9 +2,24 @@
 
 This README serves as documentation for the API endpoints listed in the provided JSON payload. The API is structured into several categories, including Users, Profiles, Authentication, Posts, and Messages.
 
+---
 
+## Project Overview
 
+This project consists of two main components:
 
+1. **Backend**: The backend API (this repository) handles all server-side logic, database interactions, and API endpoints.
+2. **Frontend**: The frontend for this project is hosted on [TrustLink](https://github.com/hawkaii/TrustLink). It provides the user interface for interacting with the API.
+
+---
+
+## Hosting and Resources
+
+- **Backend Hosting**: The backend server is hosted on [DigitalOcean](https://www.digitalocean.com).
+- **Frontend Repository**: [TrustLink](https://github.com/hawkaii/TrustLink)
+- **Base URL**: The base URL for API requests is `https://tienext.inceptionsoftech.com/v1`.
+
+---
 
 ## Endpoints
 
