@@ -27,6 +27,18 @@ The detailed API endpoints are documented in the [endpoints.md](./endpoints.md) 
 
 ---
 
+## StarkNet Integration
+
+### Instructions
+
+Refer to the [StarkNet Instructions](./starknet_instructions.md) file for detailed steps on performing transactions using StarkNet.
+
+### Endpoints
+
+StarkNet-specific endpoints are included in the [endpoints.md](./endpoints.md) file under the "StarkNet" section.
+
+---
+
 ## Variables
 
 To configure the application, create a `.env` file in the root directory of the backend project and define the following variables:
